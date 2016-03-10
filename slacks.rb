@@ -15,9 +15,11 @@ end
 def new_message
   page = @mechanize.get('http://trumpem.us/')
   @quote = page.at(".quote")
-  @quote.at('cite').remove
+  @quote.css('cite').remove
   @quote = @quote.text.strip
-  @quote.gsub!("Trump", "Drumpf").gsub!("President", "Most Ass-Hattest")
+  @quote.gsub!("Trump", "Drumpf")
+  @quote.gsub!("trump", "trumpf")
+  @quote.gsub!("President", "Most Ass-Hattest")
   @quote
 end
 
