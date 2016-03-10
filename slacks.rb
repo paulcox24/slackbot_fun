@@ -17,8 +17,7 @@ def new_message
   @quote = page.at(".quote")
   @quote.at('cite').remove
   @quote = @quote.text.strip
-  @quote.gsub!("Trump", "Drumpf")
-  @quote.gsub!("President", "Most Ass-Hattest")
+  @quote.gsub!("Trump", "Drumpf").gsub!("President", "Most Ass-Hattest")
   @quote
 end
 
