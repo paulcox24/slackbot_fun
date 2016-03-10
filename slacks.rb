@@ -17,7 +17,16 @@ def new_message
   @client.chat_postMessage(channel: '#general', text: @quote, as_user: true)
 end
 
-while true
-   new_message
-   sleep 30
+@realtime.on :message do |data|
+  if !!(data.text =~ /[Tt]rump/) || !!(data.text =~ /The Don/)
+    @realtime.message channel: data.channel, text: new_message, as_user: true
+  end
 end
+
+@realtime.start!
+
+
+# while true
+#    new_message
+#    sleep 30
+# end
