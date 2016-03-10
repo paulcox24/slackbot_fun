@@ -14,11 +14,12 @@ end
 def new_message
   page = @mechanize.get('http://trumpem.us/')
   @quote = page.at(".quote").text.strip
+  @quote.gsub("Trump", "Drumpf")
   @client.chat_postMessage(channel: '#general', text: @quote, as_user: true)
 end
 
 @realtime.on :message do |data|
-  if !!(data.text =~ /[Tt]rump/) || !!(data.text =~ /The Don/)
+  if !!(data.text =~ /[Tt]rump/) || !!(data.text =~ /The Don/) || !!(data.text =~ /[Dd]rumpf/)
     @realtime.message channel: data.channel, text: new_message, as_user: true
   end
 end
