@@ -1,6 +1,7 @@
 require 'slack-ruby-client'
 require 'dotenv'
 require 'mechanize'
+require 'pry'
 Dotenv.load
 @mechanize = Mechanize.new
 
@@ -13,13 +14,16 @@ end
 
 def new_message
   page = @mechanize.get('http://trumpem.us/')
-  @quote = page.at(".quote").text.strip
-  @quote.gsub("Trump", "Drumpf")
-  @client.chat_postMessage(channel: '#general', text: @quote, as_user: true)
+  @quote = page.at(".quote")
+  @quote.at('cite').remove
+  @quote = @quote.text.strip
+  @quote.gsub!("Trump", "Drumpf")
+  @quote.gsub!("President", "Most Ass-Hattest")
+  @quote
 end
 
 @realtime.on :message do |data|
-  if !!(data.text =~ /[Tt]rump/) || !!(data.text =~ /The Don/) || !!(data.text =~ /[Dd]rumpf/)
+  if !!(data.text =~ /[Tt]rump/) || !!(data.text =~ /The Don/)
     @realtime.message channel: data.channel, text: new_message, as_user: true
   end
 end
