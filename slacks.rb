@@ -9,7 +9,7 @@ Slack.configure do |config|
   config.token = ENV['TOKEN']
 end
 
-@client = Slack::Web::Client.new
+# @client = Slack::Web::Client.new
 @realtime = Slack::RealTime::Client.new
 
 def new_message
